@@ -1,4 +1,4 @@
-import { API_PREFIX, IS_CE_EDITION, PUBLIC_API_PREFIX } from '@/config'
+import { API_PREFIX, PUBLIC_API_PREFIX } from '@/config'
 import { refreshAccessTokenOrRelogin } from './refresh-token'
 import Toast from '@/app/components/base/toast'
 import type { AnnotationReply, MessageEnd, MessageReplace, ThoughtItem } from '@/app/components/base/chat/chat/type'
@@ -21,7 +21,7 @@ import type {
   WorkflowStartedResponse,
 } from '@/types/workflow'
 import { removeAccessToken } from '@/app/components/share/utils'
-import type { FetchOptionType, ResponseError } from './fetch'
+import type { FetchOptionType } from './fetch'
 import { ContentType, base, baseOptions, getAccessToken } from './fetch'
 import { asyncRunSafe } from '@/utils'
 const TIME_OUT = 100000
@@ -465,7 +465,15 @@ export const request = async<T>(url: string, options = {}, otherOptions?: IOther
       return resp
     const errResp: Response = err as any
     if (errResp.status === 401) {
-      const [parseErr, errRespData] = await asyncRunSafe<ResponseError>(errResp.json())
+      console.log(process.env.NEXT_PUBLIC_EDITION)
+      console.log(process.env.NEXT_W3_URL)//
+      if(process.env.NEXT_PUBLIC_W3_URL)
+        window.location.href = process.env.NEXT_PUBLIC_W3_URL
+
+      else
+        window.location.href = 'https://google.com'
+
+      /* const [parseErr, errRespData] = await asyncRunSafe<ResponseError>(errResp.json())
       const loginUrl = `${globalThis.location.origin}/signin`
       if (parseErr) {
         globalThis.location.href = loginUrl
@@ -519,7 +527,7 @@ export const request = async<T>(url: string, options = {}, otherOptions?: IOther
         return Promise.reject(err)
       }
       globalThis.location.href = loginUrl
-      return Promise.reject(err)
+      return Promise.reject(err) */
     }
     else {
       return Promise.reject(err)
