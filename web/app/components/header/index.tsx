@@ -9,12 +9,9 @@ import AppNav from './app-nav'
 import DatasetNav from './dataset-nav'
 import EnvNav from './env-nav'
 import PluginsNav from './plugins-nav'
-import ExploreNav from './explore-nav'
 import ToolsNav from './tools-nav'
-import { WorkspaceProvider } from '@/context/workspace-context'
 import { useAppContext } from '@/context/app-context'
 import LogoSite from '@/app/components/base/logo/logo-site'
-import WorkplaceSelector from '@/app/components/header/account-dropdown/workplace-selector'
 import useBreakpoints, { MediaType } from '@/hooks/use-breakpoints'
 import { useProviderContext } from '@/context/provider-context'
 import { useModalContext } from '@/context/modal-context'
@@ -65,9 +62,7 @@ const Header = () => {
             </Link>
             <div className='font-light text-divider-deep'>/</div>
             <div className='flex items-center gap-0.5'>
-              <WorkspaceProvider>
-                <WorkplaceSelector />
-              </WorkspaceProvider>
+
               {enableBilling ? <PlanBadge allowHover sandboxAsUpgrade plan={plan.type} onClick={handlePlanClick} /> : <LicenseNav />}
             </div>
           </div>
@@ -85,7 +80,7 @@ const Header = () => {
       {
         !isMobile && (
           <div className='flex items-center'>
-            {!isCurrentWorkspaceDatasetOperator && <ExploreNav className={navClassName} />}
+
             {!isCurrentWorkspaceDatasetOperator && <AppNav />}
             {(isCurrentWorkspaceEditor || isCurrentWorkspaceDatasetOperator) && <DatasetNav />}
             {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />}
@@ -102,7 +97,7 @@ const Header = () => {
       {
         (isMobile && isShowNavMenu) && (
           <div className='w-full flex flex-col p-2 gap-y-1'>
-            {!isCurrentWorkspaceDatasetOperator && <ExploreNav className={navClassName} />}
+
             {!isCurrentWorkspaceDatasetOperator && <AppNav />}
             {(isCurrentWorkspaceEditor || isCurrentWorkspaceDatasetOperator) && <DatasetNav />}
             {!isCurrentWorkspaceDatasetOperator && <ToolsNav className={navClassName} />}
